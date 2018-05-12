@@ -7,7 +7,7 @@ public final class HeavenlyBody {
 	private final String name;
 	private final double orbitalPeriod;
 	private final Set<HeavenlyBody> satellites;
-	
+
 	public HeavenlyBody(String name, double orbitalPeriod) {
 		this.name = name;
 		this.orbitalPeriod = orbitalPeriod;
@@ -21,7 +21,7 @@ public final class HeavenlyBody {
 	public double getOrbitalPeriod() {
 		return orbitalPeriod;
 	}
-	
+
 	public Set<HeavenlyBody> getSatellites() {
 		return new HashSet<>(this.satellites);
 	}
@@ -30,22 +30,38 @@ public final class HeavenlyBody {
 		return this.satellites.add(moon);
 	}
 
+	// If using own objects as either a key in a Map or an element in a Set, they
+	// should override the equals() and hashCode() methods.
+
+	// Base equals() just compares by 'Referential Equal', which means that it only
+	// return 'true' if it's the same referencial object
+
+	// If two objects compare equal, then hashCodes must also be the same.
 	
+	// https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#equals-java.lang.Object-
+
 	@Override
 	public boolean equals(Object obj) {
-		if(this == obj) {
+		if (this == obj) {
 			return true;
 		}
-		
+
 		System.out.println("obj.getClass() is " + obj.getClass());
 		System.out.println("this.getClass() is " + this.getClass());
-		if((obj == null || (obj.getClass() != this.getClass()))) {
+		if ((obj == null || (obj.getClass() != this.getClass()))) {
 			return false;
 		}
-		
+
 		String objName = ((HeavenlyBody) obj).getName();
 		return this.name.equals(objName);
 	}
+
+	@Override
+	public int hashCode() {
+		System.out.println("hashcode called");
+		return this.name.hashCode() + 57;
+	}
 	
 	
+
 }
